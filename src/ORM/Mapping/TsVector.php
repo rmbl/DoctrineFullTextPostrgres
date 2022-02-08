@@ -8,33 +8,26 @@
 
 namespace VertigoLabs\DoctrineFullTextPostgres\ORM\Mapping;
 
-use Doctrine\Common\Annotations\Annotation;
-use Doctrine\Common\Annotations\Annotation\Target;
+use Attribute;
 
-/**
- * Class TsVector.
- *
- * @Annotation
- * @Target("PROPERTY")
- */
-final class TsVector extends Annotation
+#[Attribute(Attribute::TARGET_PROPERTY)]
+final class TsVector
 {
-    /**
-     * @var array<string>
-     * @Annotation\Required()
-     */
-    public $fields = [];
-    /**
-     * @var string
-     */
-    public $name;
-    /**
-     * @var string
+    /*
      * @Annotation\Enum({"A","B","C","D"})
      */
-    public $weight = 'D';
-    /**
-     * @var string
-     */
-    public $language = 'english';
+    //public string $weight = 'D';
+
+    /** @param string[] $weight */
+    public function __construct(
+        array $fields,
+        public string $name,
+        public string $weight = 'D',
+        public string $language = 'english'
+    ) {
+        $this->fields = $fields;
+        $this->name = $name;
+        $this->weight = $weight;
+        $this->language = $language;
+    }
 }
